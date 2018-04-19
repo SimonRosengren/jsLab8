@@ -1,0 +1,55 @@
+body{
+    background-color: rgb(255, 140, 64);
+}
+
+#pokemon-holder{
+    display: inline-block;
+    margin: 200px 200px 165px 120px;
+    text-align: center;
+    color: white;
+}
+#marvel-holder{
+    margin-left: 200px;
+    display: inline-block;
+    margin: 200px 200px 165px 120px;
+    color: white;
+}
+#vs-div{
+    display: inline-block;
+    margin: 100px 20px;
+    text-align: center;
+    color: white;    
+}
+
+.scoreboard{
+    color: white;
+}
+
+.scoreboard ul{
+    display: inline-block;
+    list-style: none;
+}
+
+#game-holder{
+    width: 1500px;
+    height: 800px;
+    background-color: rgba(0,0,0,1);
+    font-family: 'Black Ops One', cursive;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    overflow: hidden;
+    margin: auto;
+}
+
+#marvel-image {
+    
+    max-width:230px;
+    max-height:95px;
+    width: auto;
+    height: auto;
+  }
+
