@@ -2,8 +2,11 @@
 
 const publicKey = "4e4c4629dc02b846216360561c9aa443";
 
-var PouchDB = require('pouchdb-browser');
-var db = new PouchDB('my_database');
+var PouchDB = require('pouchdb-browser');//Require the db. "Require" on client is possible through browserify "http://browserify.org/"
+//Browserify will create a new .js based on another .js to make "require" work on the client side
+
+
+var db = new PouchDB('my_database');    //Create the database
 
 $(document).ready(function () {
     initLoadingIcons();
@@ -12,6 +15,9 @@ $(document).ready(function () {
     showWinners();
 })
 
+
+
+//Removes the loading icon, sets a pokemon picture and name from API
 function setRandomPokemon() {
     var randomSection = Math.floor(Math.random() * 20) + 1; //Sets a random value between 1 and 10
     var uri = "https://pokeapi.co/api/v2/pokemon/" + randomSection; //Random section is used because the poke-api is so big I dont want everything
@@ -23,7 +29,7 @@ function setRandomPokemon() {
         $("#pokemon-name").text(pokemon.toUpperCase());
         $("#pokemon-image").attr("src", data.sprites.front_default);
         $("#pokemon-image").click(function () {
-            addWinner($("#pokemon-name").text(), $("#marvel-name").text());
+            addWinner($("#pokemon-name").text(), $("#marvel-name").text()); //Add winner and loser to the database
             loadNewContestents(); 
         })
     });
@@ -49,11 +55,12 @@ function setRandomMarvel() {
     });
 }
 
+//Clears the list of previous matches, then it gets all the games from the database and presents five of them
 function showWinners() {
     $("#winners").empty();
     $("#losers").empty();
     db.allDocs({ include_docs: true, descending: true }, function (err, doc) {
-        var loopLength = 5 > doc.rows.length ? doc.rows.length : 5;
+        var loopLength = 5 > doc.rows.length ? doc.rows.length : 5; //Sets the number of matches ti be displayed. 5 or the number in the database if its less than 5
         for (let i = 0; i < loopLength; i++) {
             console.log(doc.rows[i].doc.loser)
             $("#winners").append('<li>' + doc.rows[i].doc.winner + '</li>')
@@ -62,6 +69,7 @@ function showWinners() {
     });
 }
 
+//Creates the loading icons
 function initLoadingIcons(){
     var loadingMock = '<div class="loader"><div class="ball-clip-rotate-multiple"><div></div><div></div></div></div>'
     $("#pokemon-holder").empty();
@@ -77,12 +85,14 @@ function loadNewContestents() {
 }
 
 function addWinner(winnerName, loserName) {
+    //Creating a new match object
     var match = {
         _id: new Date().toISOString(),
         winner: winnerName,
         loser: loserName,
         completed: false
     };
+    //Saves the math object to the database and updates the scoreboard if no error occured.
     db.put(match, function callback(err, result) {
         if (!err) {
             showWinners();
