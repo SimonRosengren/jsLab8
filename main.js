@@ -37,7 +37,7 @@ function setRandomPokemon() {
 
 
 function setRandomMarvel() {
-    var uri = "http://gateway.marvel.com/v1/public/characters?orderBy=-modified&limit=30&apikey=" + publicKey;
+    var uri = "https://gateway.marvel.com/v1/public/characters?orderBy=-modified&limit=30&apikey=" + publicKey;
     $.get(uri, function (data, status) {
         var randomIndex = Math.floor(Math.random() * 30) + 1;
         var name = data.data.results[randomIndex].name
